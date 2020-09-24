@@ -73,7 +73,7 @@ class SiteController extends Controller
             $headers = $client->getHeaders();
             print_r($headers);
             // 通过请求传递 $headers，如使用 GuzzleHttp
-            // $httpClient = new Client(['base_uri' => Signature::getHost()]);
+            // $httpClient = new Client(['base_uri' => 'http://domain.com']);
             // $request = $httpClient->get('/test', ['headers' => $headers, 'query' => $params]);
 
             /**
