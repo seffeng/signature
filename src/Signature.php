@@ -621,7 +621,7 @@ class Signature
      * @date   2020年9月14日
      * @return boolean
      */
-    protected function getIsDebug()
+    public function getIsDebug()
     {
         return $this->debug;
     }
