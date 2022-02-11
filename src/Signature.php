@@ -463,7 +463,9 @@ class Signature
         if ($params) {
             ksort($params);
             foreach ($params as $key => $value) {
-                $string .= urlencode($key) .'='. urlencode((is_string($value) || is_numeric($value)) ? $value : '') . $this->getConnector();
+                if ((is_string($value) || is_numeric($value)) || is_bool($value)) {
+                    $string .= urlencode($key) .'='. urlencode($value) . $this->getConnector();
+                }
             }
             $strlen = strlen($this->getConnector());
             $strlen > 0 && $string = substr($string, 0, - $strlen);
