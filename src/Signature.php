@@ -464,7 +464,7 @@ class Signature
             ksort($params);
             foreach ($params as $key => $value) {
                 if ((is_string($value) || is_numeric($value)) || is_bool($value)) {
-                    $string .= urlencode($key) .'='. urlencode($value) . $this->getConnector();
+                    $string .= urlencode($key) .'='. (is_bool($value) ? ($value === true ? 'true' : 'false') : urlencode($value)) . $this->getConnector();
                 }
             }
             $strlen = strlen($this->getConnector());
