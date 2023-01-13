@@ -108,6 +108,12 @@ class Signature
     protected $signature;
 
     /**
+     * 参与签名字符串
+     * @var string
+     */
+    protected $signString;
+
+    /**
      *
      * @var string
      */
@@ -497,11 +503,11 @@ class Signature
     protected function setSignature(string $method, string $uri, array $params = [])
     {
         $paramsSign = $this->signParameters($params);
-        $signString = $this->getPrefix() . $method . $this->getConnector() . ($this->getVersion() ? (($this->getHeaderVersion() . '='. $this->getVersion()) . $this->getConnector()) : '') .
+        $this->signString = $this->getPrefix() . $method . $this->getConnector() . ($this->getVersion() ? (($this->getHeaderVersion() . '='. $this->getVersion()) . $this->getConnector()) : '') .
                       $this->getUri($uri) . $this->getConnector() . $this->getHeaderAccessKeyId(). '=' . $this->getAccessKeyId() .
                       $this->getConnector() . $this->getHeaderTimestamp() . '='. $this->getTimestamp() . $paramsSign . $this->getSuffix();
 
-        $this->signature = $this->getSignatureWithTag(base64_encode(hash_hmac($this->getAlgo(), $signString , $this->getAccessKeySecret(), true)));
+        $this->signature = $this->getSignatureWithTag(base64_encode(hash_hmac($this->getAlgo(), $this->signString , $this->getAccessKeySecret(), true)));
         return $this;
     }
 
@@ -626,6 +632,32 @@ class Signature
     public function getIsDebug()
     {
         return $this->debug;
+    }
+
+    /**
+     * 参与签名的字符串
+     *
+     * @author zxf
+     * @date   2023-01-13
+     * @param string $value
+     * @return static
+     */
+    public function setSignString(string $value)
+    {
+        $this->signString = $value;
+        return $this;
+    }
+
+    /**
+     * 参与签名的字符串
+     *
+     * @author zxf
+     * @date   2023-01-13
+     * @return string
+     */
+    public function getSignString()
+    {
+        return $this->signString;
     }
 
     /**
