@@ -420,7 +420,7 @@ class Signature
      *
      * @author zxf
      * @date   2020年9月14日
-     * @return number
+     * @return integer
      */
     public function getTimeout()
     {
@@ -431,7 +431,7 @@ class Signature
      *
      * @author zxf
      * @date   2020年9月21日
-     * @param int $timeout
+     * @param integer $timeout
      * @return static
      */
     public function setTimeout(int $timeout)
@@ -444,7 +444,7 @@ class Signature
      *
      * @author zxf
      * @date   2020年9月14日
-     * @param int $timestamp
+     * @param integer $timestamp
      * @return boolean
      */
     public function verifyTimestamp(int $timestamp)
