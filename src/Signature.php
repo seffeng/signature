@@ -398,7 +398,7 @@ class Signature
      */
     public function setTimestamp(int $time = null)
     {
-        $this->timestamp = is_null($time) ? time() : $time;
+        $this->timestamp = is_null($time) ? time() : (strlen($time) >= 13 ? bcdiv($time, 1000, 0) : $time);
         return $this;
     }
 
