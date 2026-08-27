@@ -6,7 +6,7 @@
 namespace Seffeng\Signature;
 
 use Seffeng\Signature\Exceptions\SignatureException;
-use Seffeng\Signature\Helpers\ArrayHelper;
+use Seffeng\ArrHelper\Arr;
 use Seffeng\Signature\Exceptions\SignatureTimeoutException;
 
 class Signature
@@ -123,13 +123,15 @@ class Signature
      *
      * @author zxf
      * @date   2020年9月14日
-     * @param array $options
+     * @param string $accessKeyId
+     * @param string $accessKeySecret
+     * @param array $optoins
      */
     public function __construct(string $accessKeyId, string $accessKeySecret, array $optoins = [])
     {
         $this->setAccessKeyId($accessKeyId);
         $this->setAccessKeySecret($accessKeySecret);
-        $this->debug = ArrayHelper::getValue($optoins, 'debug');
+        $this->debug = Arr::getValue($optoins, 'debug');
         $this->config = $optoins;
         if ($this->config) {
             $this->loadConfig();
@@ -396,7 +398,7 @@ class Signature
      * @author zxf
      * @date   2020年9月14日
      */
-    public function setTimestamp(int $time = null)
+    public function setTimestamp(?int $time = null)
     {
         $this->timestamp = is_null($time) ? time() : (strlen($time) >= 13 ? bcdiv($time, 1000, 0) : $time);
         return $this;
@@ -668,37 +670,37 @@ class Signature
      */
     protected function loadConfig()
     {
-        $timeout = ArrayHelper::getValue($this->config, 'timeout');
+        $timeout = Arr::getValue($this->config, 'timeout');
         $timeout && $this->setTimeout($timeout);
 
-        $version = ArrayHelper::getValue($this->config, 'version');
+        $version = Arr::getValue($this->config, 'version');
         $version && $this->setVersion($version);
 
-        $prefix = ArrayHelper::getValue($this->config, 'prefix');
+        $prefix = Arr::getValue($this->config, 'prefix');
         $prefix && $this->setPrefix($prefix);
 
-        $connector = ArrayHelper::getValue($this->config, 'connector');
+        $connector = Arr::getValue($this->config, 'connector');
         $connector && $this->setConnector($connector);
 
-        $suffix = ArrayHelper::getValue($this->config, 'suffix');
+        $suffix = Arr::getValue($this->config, 'suffix');
         $suffix && $this->setSuffix($suffix);
 
-        $headerAccessKeyId = ArrayHelper::getValue($this->config, 'headerAccessKeyId');
+        $headerAccessKeyId = Arr::getValue($this->config, 'headerAccessKeyId');
         $headerAccessKeyId && $this->setHeaderAccessKeyId($headerAccessKeyId);
 
-        $headerTimestamp = ArrayHelper::getValue($this->config, 'headerTimestamp');
+        $headerTimestamp = Arr::getValue($this->config, 'headerTimestamp');
         $headerTimestamp && $this->setHeaderTimestamp($headerTimestamp);
 
-        $headerSignature = ArrayHelper::getValue($this->config, 'headerSignature');
+        $headerSignature = Arr::getValue($this->config, 'headerSignature');
         $headerSignature && $this->setHeaderSignature($headerSignature);
 
-        $headerSignatureTag = ArrayHelper::getValue($this->config, 'headerSignatureTag');
+        $headerSignatureTag = Arr::getValue($this->config, 'headerSignatureTag');
         $headerSignatureTag && $this->setHeaderSignatureTag($headerSignatureTag);
 
-        $headerVersion = ArrayHelper::getValue($this->config, 'headerVersion');
+        $headerVersion = Arr::getValue($this->config, 'headerVersion');
         $headerVersion && $this->setHeaderVersion($headerVersion);
 
-        $algo = ArrayHelper::getValue($this->config, 'algo');
+        $algo = Arr::getValue($this->config, 'algo');
         $algo && $this->setAlgo($algo);
 
         if (empty($this->getAccessKeyId()) || empty($this->getAccessKeySecret())) {
