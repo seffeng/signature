@@ -184,12 +184,12 @@ class Signature
      */
     public function getHeaders(array $headers = [])
     {
-        return array_merge($headers, [
+        return array_merge($headers, array_filter([
             $this->getHeaderAccessKeyId() => $this->getAccessKeyId(),
-            $this->getHeaderTimestamp() => $this->getTimestamp(),
+            $this->getHeaderTimestamp() => (string) $this->getTimestamp(),
             $this->getHeaderSignature() => $this->getSignature(),
             $this->getHeaderVersion() => $this->getVersion()
-        ]);
+        ]));
     }
 
     /**
